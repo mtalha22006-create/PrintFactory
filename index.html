@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrintFactory.pk - Premium Packaging Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: #f8f8f8;
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .top-bar-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #d35400;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #d35400;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .header-icons a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Hero Slider */
+        .hero-slider {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide-1 {
+            background: linear-gradient(135deg, #ff6b6b, #d35400);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .slide-2 {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .slide-content h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .slide-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: #d35400;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .dot.active {
+            background: white;
+        }
+
+        /* Hot Sales Banner */
+        .hot-sale-banner {
+            background: #fff3cd;
+            padding: 1rem;
+            text-align: center;
+            font-weight: bold;
+            color: #856404;
+            border-top: 2px solid #ffc107;
+            border-bottom: 2px solid #ffc107;
+        }
+
+        /* Categories Section */
+        .categories {
+            padding: 3rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-card h3 {
+            color: #d35400;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 3rem 2rem;
+            background: #f8f8f8;
+        }
+
+        .products-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .product-image {
+            position: relative;
+            height: 250px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-category {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .product-price {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .current-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #d35400;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .savings {
+            background: #27ae60;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 0.8rem;
+            background: #d35400;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: #b84500;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 3rem 2rem;
+            background: white;
+        }
+
+        .features-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-box {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #d35400;
+        }
+
+        .feature-box h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* About Section */
+        .about {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-content ul {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .about-content li {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .about-content li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .about-image {
+            text-align: center;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        /* Blog Section */
+        .blog {
+            padding: 3rem 2rem;
+            background: #f8f8f8;
+        }
+
+        .blog-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .blog-image {
+            height: 250px;
+            background: #ddd;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-category {
+            color: #d35400;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-link {
+            color: #d35400;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #d35400;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav {
+                display: none;
+            }
+
+            nav.active {
+                display: block;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .slide-content h2 {
+                font-size: 2rem;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <span>📞 Contact: +92 300 1234567</span>
+            <span>🚚 Free Delivery on Orders Above Rs. 9999</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">PrintFactory.pk</div>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#categories">Categories</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-icons">
+                <a href="#search">🔍</a>
+                <a href="#cart">🛒</a>
+                <a href="#account">👤</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Slider -->
+    <section class="hero-slider" id="home">
+        <div class="slide slide-1 active">
+            <div class="slide-content">
+                <h2>Custom Butterpaper Printing</h2>
+                <p>Premium Quality Packaging Solutions</p>
+                <a href="#products" class="btn">Shop Now</a>
+            </div>
+        </div>
+        <div class="slide slide-2">
+            <div class="slide-content">
+                <h2>Custom Sticker Labels</h2>
+                <p>Any Size, Any Design</p>
+                <a href="#products" class="btn">Order Now</a>
+            </div>
+        </div>
+        <div class="slider-dots">
+            <span class="dot active" onclick="goToSlide(0)"></span>
+            <span class="dot" onclick="goToSlide(1)"></span>
+        </div>
+    </section>
+
+    <!-- Hot Sale Banner -->
+    <div class="hot-sale-banner">
+        ⚡ HOT SALE ⚡ Limited Time Offers on Selected Items!
+    </div>
+
+    <!-- Categories -->
+    <section class="categories" id="categories">
+        <h2 class="section-title">Browse By Category</h2>
+        <div class="category-grid">
+            <div class="category-card">
+                <div class="category-icon">📦</div>
+                <h3>E-Commerce Boxes</h3>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">🎂</div>
+                <h3>Bakery</h3>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">👕</div>
+                <h3>Clothing Packaging</h3>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">💎</div>
+                <h3>Jewelry Packaging</h3>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">🏷️</div>
+                <h3>Stickers</h3>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">🛍️</div>
+                <h3>Shopping Bags</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="products-container">
+            <h2 class="section-title">New Arrivals</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge">SALE</span>
+                        <div style="font-size: 4rem;">📦</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">E-Commerce Boxes</div>
+                        <div class="product-title">Kraft 3-Ply Mailer Shipping Box – 11.5x6.5x2 Inches</div>
+                        <div class="product-price">
+                            <span class="current-price">Rs. 1,200</span>
+                            <span class="old-price">Rs. 1,500</span>
+                            <span class="savings">Save 20%</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div style="font-size: 4rem;">🧁</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Bakery</div>
+                        <div class="product-title">Cupcake Box 12pcs Kraft with Window & Inserts</div>
+                        <div class="product-price">
+                            <span class="current-price">Rs. 800</span>
+                            <span class="old-price">Rs. 1,000</span>
+                            <span class="savings">Save 20%</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge">HOT</span>
+                        <div style="font-size: 4rem;">🏷️</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Stickers</div>
+                        <div class="product-title">Thank You Sticker 2.5 inches Pack-100pc</div>
+                        <div class="product-price">
+                            <span class="current-price">Rs. 350</span>
+                            <span class="old-price">Rs. 450</span>
+                            <span class="savings">Save 22%</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div style="font-size: 4rem;">📄</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Accessories</div>
+                        <div class="product-title">Kraft Card Sheet (A4 Size) 25pcs Pack</div>
+                        <div class="product-price">
+                            <span class="current-price">Rs. 500</span>
+                            <span class="old-price">Rs. 600</span>
+                            <span class="savings">Save 17%</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div style="font-size: 4rem;">🛍️</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Shopping Bags</div>
+                        <div class="product-title">Kraft Bag Large 15.5x10x3.25 inches</div>
+                        <div class="product-price">
+                            <span class="current-price">Rs. 900</span>
+                            <span class="old-price">Rs. 1,100</span>
+                            <span class="savings">Save 18%</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge">NEW</span>
+                        <div style="font-size: 4rem;">📦</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">E-Commerce</div>
+                        <div class="product-title">Shipping Box Large 16.5x12x5 inches</div>
+                        <div class="product-price">
+                            <span class="current-price">Rs. 1,800</span>
+                            <span class="old-price">Rs. 2,200</span>
+                            <span class="savings">Save 18%</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Customised Printing</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <div style="font-size: 4rem;">🎨</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Customised</div>
+                        <div class="product-title">Custom Sized Butterpaper Wrap With Your Logo</div>
+                        <div class="product-price">
+                            <span class="current-price">Rs. 2,500</span>
+                        </div>
+                        <button class="add-to-cart">Order Custom</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div style="font-size: 4rem;">🏷️</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Stickers</div>
+                        <div class="product-title">Customised Sticker Any Size</div>
+                        <div class="product-price">
+                            <span class="current-price">Rs. 1,500</span>
+                        </div>
+                        <button class="add-to-cart">Order Custom</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <div style="font-size: 4rem;">💌</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Custom Print</div>
+                        <div class="product-title">Custom Printed Thank You Cards – Starting from 100 pcs</div>
+                        <div class="product-price">
+                            <span class="current-price">Rs. 3,000</span>
+                        </div>
+                        <button class="add-to-cart">Order Custom</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="features-container">
+            <div class="feature-box">
+                <div class="feature-icon">🚚</div>
+                <h3>Free Delivery</h3>
+                <p>From Rs 9999 Selected Items</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">⚡</div>
+                <h3>Same Day Delivery</h3>
+                <p>Or Pickup Available in Lahore</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">📦</div>
+                <h3>Premade & Custom</h3>
+                <p>Ready Stock & Custom Packaging</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">✨</div>
+                <h3>Premium Quality</h3>
+                <p>High-Quality Materials</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="about-content">
+                <h2>We Care About Your Brand's Packaging</h2>
+                <p>We understand that your packaging is more than just a box – it's the first impression of your brand.</p>
+                <ul>
+                    <li>High-Quality Printing – Crisp, vibrant, and detail-perfect results</li>
+                    <li>Durable Packaging – Designed to protect and impress</li>
+                    <li>Custom Solutions – Tailored designs for your unique brand identity</li>
+                    <li>Fast Turnaround – Quick delivery across Pakistan</li>
+                </ul>
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-number">100+</div>
+                        <div>Brands Served</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">22K+</div>
+                        <div>Happy Clients</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">5M+</div>
+                        <div>Boxes Crafted</div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <div style="font-size: 10rem;">📦</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog" id="blog">
+        <div class="blog-container">
+            <h2 class="section-title">Latest Posts</h2>
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <div class="blog-image"></div>
+                    <div class="blog-content">
+                        <div class="blog-category">Packaging</div>
+                        <h3 class="blog-title">Custom Packaging: What It Is and How It Can Benefit Your Business</h3>
+                        <a href="#" class="blog-link">Continue Reading →</a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-image"></div>
+                    <div class="blog-content">
+                        <div class="blog-category">Packaging</div>
+                        <h3 class="blog-title">The Role of Packaging in Branding</h3>
+                        <a href="#" class="blog-link">Continue Reading →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>About MegaPack</h3>
+                <p>Premium packaging solutions for your business. We deliver quality and creativity in every box.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul>
+                    <li><a href="#">E-Commerce Boxes</a></li>
+                    <li><a href="#">Bakery Packaging</a></li>
+                    <li><a href="#">Stickers</a></li>
+                    <li><a href="#">Custom Printing</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p>📍 Lahore, Pakistan</p>
+                <p>📞 +92 300 1234567</p>
+                <p>✉️ info@megapack.pk</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 MegaPack.pk - All Rights Reserved</p>
+        </div>
+    </footer>
+</body>
+</html>
